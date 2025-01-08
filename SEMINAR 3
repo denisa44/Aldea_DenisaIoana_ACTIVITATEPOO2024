@@ -1,0 +1,83 @@
+#include <iostream>
+using namespace std;
+
+class cofetarie
+{
+public:
+	string nume;
+	int nrAngajati;
+	bool esteVegana;
+	const int anDeschidere;
+	float adaos;
+	static int TVA; 
+
+	cofetarie():adaos(30), anDeschidere(2024) {
+		this->nume = "Delice";
+		this->nrAngajati = 3;
+			this->esteVegana = true;
+
+	}
+	cofetarie(string nume, int nrAngajati, bool vegan,int an, float adaos):anDeschidere(an)
+	{
+		this->nume = nume;
+		this->nrAngajati = nrAngajati;
+		this->esteVegana = vegan;
+		this->adaos = adaos;
+	}
+	void afisare()
+	{
+		cout << "Nume: " << this->nume << endl;
+		cout << "nr angajati: " << this->nrAngajati << endl;
+		cout << "este vegana: " << (this->esteVegana?"DA":"NU") << endl;
+		cout << "an deschidere: " << this->anDeschidere << endl;
+		cout << "adaos: " << this->adaos << endl;
+		cout << "TVA: " << cofetarie::TVA<< endl;
+	}
+	static void modificaTVA(int noulTVA) {
+		if (noulTVA>0)
+		cofetarie::TVA = noulTVA;
+	}
+	static int calculeazaNrTotalAngajati(int nrCofetarii, cofetarie*vector)
+	{
+		int suma = 0;
+		for (int i = 0; i < nrCofetarii; i++)
+		{
+			suma += vector[i].nrAngajati;
+		}
+		return suma;
+	}
+
+
+};
+int cofetarie::TVA = 9;
+
+int main()
+{
+	cofetarie c1;
+	c1.afisare();
+	cofetarie::modificaTVA(19);
+	cofetarie c2("DolceVita", 6, false,2019, 10);
+	c2.afisare();
+	cofetarie* pointer;
+	pointer = new cofetarie("Ana State", 3, false, 2020, 20);
+	pointer->afisare();
+	delete pointer;
+	//-> - dereferentiere + accesare
+//[] deplasare + dereferentiere
+	
+	int nrcofetarii = 3;
+
+	cofetarie* vector;
+	vector = new cofetarie[nrcofetarii];
+
+	for (int i = 0; i < nrcofetarii; i++)
+	{
+		vector[i].afisare();
+	}
+
+	cout << "numar total angajati: " << cofetarie::calculeazaNrTotalAngajati(nrcofetarii, vector);
+	delete []vector;
+	return 0;
+
+
+}
